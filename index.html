@@ -1,0 +1,206 @@
+<html>
+    <head>
+        <title></title>
+        <link rel="stylesheet" href="/css/main.css" >
+        <script src="/script/react.js"></script>
+        <script src="/script/JSXTransformer.js"></script>
+        <script src="/script/jquery-2.1.4.min.js"></script>
+        <script src="/script/def.js"></script>
+        <script type="text/jsx">
+
+            // header Component
+            var Header = React.createClass({
+              setText: function(txt) {
+                  this.props.label.getDOMNode().innerText = txt;
+              },
+              render: function() {
+                return (
+                  <div className={this.props.className}>
+                    {this.props.label}
+                  </div>
+                );
+              }
+            });
+            //
+
+            //Panel
+            var TokenPanel = React.createClass({
+                getInitialState: function() {
+                    return {
+                        authType: 'default',
+                    };
+                },
+                handleChange: function(event) {
+                    var c = this.refs.authType.getDOMNode().value;
+                    if (c === null) {
+                        this.setState({ authType: 'null' });
+                    } else {
+                        this.setState({ authType: c });
+                    }
+                },
+                getClick: function() {
+                    /*
+                    response=$(curl -s --noproxy localhost https://localhost:8443/token  -H "Content-Type: application/json" \
+                -H "API-VERSION: 1" -v -k -X POST -d '{"authType":"Mobile","applicationId":"C452AF6C-FB4B-4556-AE55-F6B08270F898","apiKey":"89asdfas8998asdf","mobileId":"555-555-5555","id":"95ed1aaf-e7be-419d-9584-ac0611983f06"}'
+                    '{"authType":"Mobile","applicationId":"C452AF6C-FB4B-4556-AE55-F6B08270F898",
+                    "userName":"uname","password":"pwd","apiKey":"89asdfas8998asdf","mobileId":"555-555-5555","id":"95ed1aaf-e7be-419d-9584-ac0611983f06"}')
+                    */
+                    var auth = this.refs.authType.getDOMNode().value;
+                    var appId = this.refs.appId.getDOMNode().value;
+                    var apiKey = this.refs.apiKey.getDOMNode().value;
+                    var mobileId = this.refs.mobileId.getDOMNode().value;
+
+                    var str = '{"authType":"' + auth + '","applicationId":"' + appId + '","apiKey":"' + apiKey + '", \
+                        "mobileId":"' + mobileId + '", "customerId":"95ed1aaf-e7be-419d-9584-ac0611983f06"}'
+                        
+                    this.props.statusBar.getDOMNode().innerText = str;
+                    // Build Respose
+                },
+                customerView: function() {
+                    return  <div className='d_panel'>
+                                <label>Customer Id</label>
+                                <br/>
+                                <input type='text' id='customer_id' className='txt_input'
+                                    defaultValue='customer_id'/>
+                            </div>
+                },
+                onlineView: function() {
+                    return  <div className='d_panel'>
+                                <label>User Name</label>
+                                <br/>
+                                <input type='text' id='user_name' className='txt_input'
+                                    defaultValue='userName'/>
+                                <br/>
+                                <br/>
+                                <label>Password</label>
+                                <br/>
+                                <input type='password' id='user_pwd' className='txt_input'
+                                    defaultValue='password'/>
+                            </div>
+                },
+                mobileView: function() {
+                    return  <div className='d_panel'>
+                                <label>Mobile Number</label>
+                                <br/>
+                                <input type='text' id='mobile_id' className='txt_input'
+                                    defaultValue='555-555-5555'/>
+                            </div>
+                },
+                render: function() {
+                  return (
+                    <div className='panel'>
+                        <Header label='Get Token' className='subheader'/>
+                        <div className='inner_panel'>
+                            <div className='top_pad'>
+                                <div className='d_panel'>
+                                    <label>Auth Type</label>
+                                    <br/>
+                                    <select className='select' onChange={this.handleChange} ref='authType'>
+                                        <option value="default">Default</option>
+                                        <option value="customer">Customer</option>
+                                        <option value="mobile">Mobile</option>
+                                        <option value="online">Online</option>
+                                    </select>
+                                </div>
+                                <div className='d_panel'>
+                                    <label>ApiKey</label>
+                                    <br/>
+                                    <select className='select' ref='apiKey'>
+                                        <option value='234sfdsdfssdfsws'>
+                                            234sfdsdfssdfsws
+                                        </option>
+                                        <option value='114axdsdfssdzcvf'>
+                                            114axdsdfssdzcvf
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div className='top_pad'>
+                                <div className='d_panel'>
+                                    <label>AppId</label>
+                                    <br/>
+                                    <select className='select' ref='appId'>
+                                        <option value='C452AF6C-FB4B-4556-AE55-F6B08270F898'>
+                                            C452AF6C-FB4B-4556-AE55-F6B08270F898
+                                        </option>
+                                        <option value='A23CAF6C-FFFC-4556-AE55-A6B08270F789'>
+                                            A23CAF6C-FFFC-4556-AE55-A6B08270F789
+                                        </option>
+                                    </select>
+                                </div>
+                                <div className='d_panel'>
+                                    <div/>
+                                </div>
+                            </div>
+
+                            <div className='top_pad'>
+                                <div className='t_panel'>
+                                    <div ref='auth_placeholder'>
+                                        {(() => {
+                                            switch (this.state.authType) {
+                                              case 'default':   return '';
+                                              case 'customer':  return this.customerView();
+                                              case 'online':    return this.onlineView();
+                                              case 'mobile':    return this.mobileView();
+                                              default:          return 'error';
+                                            }
+                                          })()}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className='top_pad'>
+                                <div className='d_panel'>
+                                    <button className='button' onClick={this.getClick}>Get</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  );
+                }
+            });
+
+            $(document).ready(function() {
+                // Render to page
+                React.render(
+                  <Header label='Token Test Page' className='header'/>,
+                  document.getElementById('header_main')
+                );
+
+                var status = React.render(
+                  <Header label='Status' className='header subheader statusheader'/>,
+                  document.getElementById('status_bar')
+                );
+
+                React.render(
+                  <TokenPanel statusBar={status}/>,
+                  document.getElementById('token_get')
+                );
+
+
+
+                /*
+                React.render(
+                  <Header label='Get Token' className='header subheader'/>,
+                  document.getElementById('token_auth')
+                );
+
+                React.render(
+                  <Header label='Get Token' className='header subheader'/>,
+                  document.getElementById('status_bar')
+                );
+                */
+            });
+        </script>
+    </head>
+    <body>
+        <div id='header_main'></div>
+        <div id='token_get'>
+        </div>
+        <div id='token_auth'>
+        </div>
+        <div id='status_bar'>
+        </div>
+    </body>
+</html>

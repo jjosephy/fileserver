@@ -1,0 +1,88 @@
+body {
+    background-color: white;
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+}
+
+label {
+    font-size: .9em;
+}
+
+button {
+    width: 100px;
+    border: solid 1px #555555;
+    color: #333333;
+    background-color: #a0ccf8;
+    height: 25px;
+}
+
+.header {
+    background-color: #4a52e8;
+    position: relative;
+    width: 100%;
+    height: 40px;
+    color: white;
+    font-size:1.28em;
+    padding-top: 15px;
+    padding-left: 10px;
+    border-top: 1px solid #555555;
+    border-bottom: transparent;
+
+}
+
+.subheader {
+    background-color: #a0ccf8;
+    height: 30px;
+    font-size: 1.1em;
+    color: black;
+    padding-left: 10px;
+    padding-top:5px;
+    border: 1px solid #999999;
+}
+
+.statusheader {
+    background-color: #555555;
+    color: white;
+}
+
+.panel {
+    height: 300px;
+    background-color: lightgray;
+    border: 1px solid #333333;
+}
+
+.inner_panel {
+    padding: 10px;
+}
+
+.select {
+    width: 350px;
+    font-size: 1.3em;
+}
+
+.txt_input {
+    width: 350px;
+    font-size: .8em;
+    border: 1px solid #a0ccf8;
+    height: 25px;
+}
+
+.top_pad {
+    padding-top: 10px;
+    width: 100%;
+}
+
+.d_panel {
+    width: 30%;
+    display: inline-block;
+    background-color: transparent;
+    padding-left: 10px;
+    position: relative;
+}
+
+.t_panel {
+    width: 70%;
+    background-color: transparent;
+    padding-top: 5px;
+}
